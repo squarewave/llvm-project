@@ -7890,7 +7890,7 @@ static void handleDestroyAttr(Sema &S, Decl *D, const ParsedAttr &A) {
 }
 
 static void handleUninitializedAttr(Sema &S, Decl *D, const ParsedAttr &AL) {
-  assert(cast<VarDecl>(D)->getStorageDuration() == SD_Automatic &&
+  assert((!isa<VarDecl>(D) || cast<VarDecl>(D)->getStorageDuration() == SD_Automatic) &&
          "uninitialized is only valid on automatic duration variables");
   D->addAttr(::new (S.Context) UninitializedAttr(S.Context, AL));
 }

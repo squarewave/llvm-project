@@ -1852,7 +1852,7 @@ void CodeGenFunction::EmitAutoVarInit(const AutoVarEmission &emission) {
   LangOptions::TrivialAutoVarInitKind trivialAutoVarInit =
       (D.isConstexpr()
            ? LangOptions::TrivialAutoVarInitKind::Uninitialized
-           : (D.getAttr<UninitializedAttr>()
+           : ((D.getAttr<UninitializedAttr>() || type.shouldBeLeftUninitialized())
                   ? LangOptions::TrivialAutoVarInitKind::Uninitialized
                   : getContext().getLangOpts().getTrivialAutoVarInit()));
 

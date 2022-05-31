@@ -2552,6 +2552,16 @@ QualType::isNonTrivialToPrimitiveDestructiveMove() const {
   return isNonTrivialToPrimitiveCopy();
 }
 
+bool QualType::shouldBeLeftUninitialized() const {
+  if (const auto *RT =
+    getTypePtr()->getBaseElementTypeUnsafe()->getAs<RecordType>()) {
+    if (RT->getDecl()->hasAttr<UninitializedAttr>()) {
+      return true;
+    }
+  }
+  return false;
+}
+
 bool Type::isLiteralType(const ASTContext &Ctx) const {
   if (isDependentType())
     return false;

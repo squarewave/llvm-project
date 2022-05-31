@@ -1232,6 +1232,8 @@ public:
   /// true, isNonTrivialToPrimitiveCopy returns PCK_Struct.
   bool hasNonTrivialToPrimitiveCopyCUnion() const;
 
+  bool shouldBeLeftUninitialized() const;
+
   /// Determine whether expressions of the given type are forbidden
   /// from being lvalues in C.
   ///
